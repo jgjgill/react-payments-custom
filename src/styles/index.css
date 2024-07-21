@@ -17,6 +17,10 @@ input {
   font-size: 16px;
 }
 
+button {
+  all: unset;
+}
+
 .root {
   background-color: #fff;
   width: 375px;
