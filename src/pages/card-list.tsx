@@ -1,9 +1,13 @@
+import React from "react";
+import { useCardList } from "../providers/card-provider/card-context";
 import { useNavigation } from "../providers/router-provider/router-context";
+import { generateRandomId } from "../utils/random-id";
 
 const cardBoxList = [1, 2];
 
 function CardList() {
   const { navigate } = useNavigation();
+  const cardList = useCardList();
 
   return (
     <div className="root">
@@ -11,35 +15,45 @@ function CardList() {
         <div className="flex-center">
           <h2 className="page-title mb-10">보유 카드</h2>
         </div>
-        {cardBoxList.map((cardBoxItem) => (
-          <button
-            key={cardBoxItem}
-            className="card-box"
-            onClick={() => navigate(`/edit-card/${cardBoxItem}`)}>
-            <div className="small-card">
-              <div className="card-top">
-                <span className="card-text">클린카드</span>
-              </div>
-              <div className="card-middle">
-                <div className="small-card__chip"></div>
-              </div>
-              <div className="card-bottom">
-                <div className="card-bottom__number">
-                  <span className="card-text">1111 - 2222 - oooo - oooo</span>
-                </div>
-                <div className="card-bottom__info">
-                  <span className="card-text">프롱이</span>
-                  <span className="card-text">12 / 23</span>
-                </div>
-              </div>
-            </div>
-          </button>
-        ))}
+        {cardList.map((card) => {
+          const { 만료일, 번호, 별칭, 소유자_이름, 키 } = card;
 
-        <span className="card-nickname">법인카드</span>
+          return (
+            <React.Fragment key={키}>
+              <button
+                className="card-box"
+                onClick={() => navigate(`/edit-card/${키}`)}>
+                <div className="small-card">
+                  <div className="card-top">
+                    <span className="card-text">클린카드</span>
+                  </div>
+
+                  <div className="card-middle">
+                    <div className="small-card__chip"></div>
+                  </div>
+
+                  <div className="card-bottom">
+                    <div className="card-bottom__number">
+                      <span className="card-text">{번호}</span>
+                    </div>
+                    <div className="card-bottom__info">
+                      <span className="card-text">{소유자_이름}</span>
+                      <span className="card-text">
+                        {만료일["월"]} / {만료일["년"]}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </button>
+
+              <span className="card-nickname">{별칭}</span>
+            </React.Fragment>
+          );
+        })}
+
         <button
           className="card-box"
-          onClick={() => navigate(`/edit-card/${cardBoxList.length + 1}`)}>
+          onClick={() => navigate(`/edit-card/${generateRandomId()}`)}>
           <div className="empty-card">+</div>
         </button>
       </div>
