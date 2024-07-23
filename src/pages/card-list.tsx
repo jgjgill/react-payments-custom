@@ -3,8 +3,6 @@ import { useCardList } from "../providers/card-provider/card-context";
 import { useNavigation } from "../providers/router-provider/router-context";
 import { generateRandomId } from "../utils/random-id";
 
-const cardBoxList = [1, 2];
-
 function CardList() {
   const { navigate } = useNavigation();
   const cardList = useCardList();
