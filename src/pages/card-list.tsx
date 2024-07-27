@@ -1,11 +1,12 @@
 import React from "react";
-import { useCardList } from "../providers/card-provider/card-context";
+import { useCardData } from "../providers/card-provider/card-context";
 import { useNavigation } from "../providers/router-provider/router-context";
 import { generateRandomId } from "../utils/random-id";
 
 function CardList() {
   const { navigate } = useNavigation();
-  const cardList = useCardList();
+  const { cardData } = useCardData();
+  const cardList = Object.values(cardData);
 
   return (
     <div className="root">
@@ -23,7 +24,7 @@ function CardList() {
                 onClick={() => navigate(`/edit-card/${키}`)}>
                 <div className="small-card">
                   <div className="card-top">
-                    <span className="card-text">클린카드</span>
+                    <span className="card-text">{별칭}</span>
                   </div>
 
                   <div className="card-middle">
@@ -43,8 +44,6 @@ function CardList() {
                   </div>
                 </div>
               </button>
-
-              <span className="card-nickname">{별칭}</span>
             </React.Fragment>
           );
         })}
